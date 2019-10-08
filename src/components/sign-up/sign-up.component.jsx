@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
+
+import { useFormInput } from '../../hooks/use-form-input';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -9,10 +11,10 @@ import { signUpStart } from '../../redux/user/user.actions';
 import { SignUpContainer, SignUpTitle } from './sign-up.styles';
 
 const SignUp = ({ signUpStart }) => {
-  const [displayName, setDisplayName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const displayName = useFormInput('');
+  const email = useFormInput('');
+  const password = useFormInput('');
+  const confirmPassword = useFormInput('');
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -22,7 +24,11 @@ const SignUp = ({ signUpStart }) => {
       return;
     }
 
-    signUpStart({ displayName, email, password });
+    signUpStart({
+      displayName: displayName.value,
+      email: email.value,
+      password: password.value
+    });
   };
 
   return (
@@ -33,34 +39,30 @@ const SignUp = ({ signUpStart }) => {
         <FormInput
           type='text'
           name='displayName'
-          value={displayName}
-          onChange={e => setDisplayName(e.target.value)}
           label='Display Name'
           required
+          {...displayName}
         ></FormInput>
         <FormInput
           type='email'
           name='email'
-          value={email}
-          onChange={e => setEmail(e.target.value)}
           label='Email'
           required
+          {...email}
         ></FormInput>
         <FormInput
           type='password'
           name='password'
-          value={password}
-          onChange={e => setPassword(e.target.value)}
           label='Password'
           required
+          {...password}
         ></FormInput>
         <FormInput
           type='password'
           name='confirmPassword'
-          value={confirmPassword}
-          onChange={e => setConfirmPassword(e.target.value)}
           label='Confirm Paswword'
           required
+          {...confirmPassword}
         ></FormInput>
         <CustomButton type='submit'>SIGN UP</CustomButton>
       </form>

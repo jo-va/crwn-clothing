@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+
+import { useFormInput } from '../../hooks/use-form-input';
 
 import {
   googleSignInStart,
@@ -15,8 +17,8 @@ import {
 } from './sign-in.styles';
 
 const SignIn = ({ googleSignInStart, emailSignInStart }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const email = useFormInput('');
+  const password = useFormInput('');
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -32,18 +34,16 @@ const SignIn = ({ googleSignInStart, emailSignInStart }) => {
         <FormInput
           name='email'
           type='email'
-          value={email}
-          handleChange={e => setEmail(e.target.value)}
           label='Email'
           required
+          {...email}
         />
         <FormInput
           name='password'
           type='password'
-          value={password}
-          handleChange={e => setPassword(e.target.value)}
           label='Password'
           required
+          {...password}
         />
         <ButtonsBarContainer>
           <CustomButton type='submit'>Sign In</CustomButton>
