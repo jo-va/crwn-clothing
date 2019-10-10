@@ -10,6 +10,8 @@ import {
   selectCartTotal
 } from '../../redux/cart/cart.selectors';
 
+import { paymentSuccessful } from '../../redux/cart/cart.actions';
+
 import {
   CheckoutPageContainer,
   CheckoutHeaderContainer,
@@ -18,7 +20,7 @@ import {
   WarningContainer
 } from './checkout.styles';
 
-const CheckoutPage = ({ cartItems, total }) => (
+const CheckoutPage = ({ cartItems, total, paymentSuccessful }) => (
   <CheckoutPageContainer>
     <CheckoutHeaderContainer>
       <HeaderBlockContainer>
@@ -46,7 +48,7 @@ const CheckoutPage = ({ cartItems, total }) => (
       <br />
       4242 4242 4242 4242 - Exp: 01/20 - CVV: 123
     </WarningContainer>
-    <StripeButton price={total} />
+    <StripeButton price={total} paymentSuccessful={paymentSuccessful} />
   </CheckoutPageContainer>
 );
 
@@ -55,4 +57,11 @@ const mapStateToProps = createStructuredSelector({
   total: selectCartTotal
 });
 
-export default connect(mapStateToProps)(CheckoutPage);
+const mapDispatchToProps = dispatch => ({
+  paymentSuccessful: () => dispatch(paymentSuccessful())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CheckoutPage);

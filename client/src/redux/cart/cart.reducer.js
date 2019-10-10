@@ -1,4 +1,4 @@
-import { CartActionTypes } from './cart.types';
+import CartActionTypes from './cart.types';
 import { addItemToCart, removeItemFromCart } from './cart.utils';
 
 const INITIAL_STATE = {
@@ -30,10 +30,16 @@ const cartReducer = (state = INITIAL_STATE, action) => {
           cartItem => cartItem.id !== action.payload.id
         )
       };
+    case CartActionTypes.PAYMENT_SUCCESSFUL:
     case CartActionTypes.CLEAR_CART:
       return {
         ...state,
         cartItems: []
+      };
+    case CartActionTypes.SET_CART_FROM_FIREBASE:
+      return {
+        ...state,
+        cartItems: action.payload
       };
     default:
       return state;

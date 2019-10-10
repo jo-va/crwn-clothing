@@ -40,6 +40,23 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+export const getUserCartRef = async userId => {
+  const cartRef = firestore.doc(`carts/${userId}`);
+  const snapshot = await cartRef.get();
+
+  if (!snapshot.exists) {
+    try {
+      await cartRef.set({
+        cartItems: []
+      });
+    } catch (error) {
+      console.error('error creating cart', error.message);
+    }
+  }
+
+  return cartRef;
+};
+
 export const addCollectionAndDocuments = async (
   collectionKey,
   objectsToAdd

@@ -2,7 +2,7 @@ import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 
-const StripeCheckoutButton = ({ price }) => {
+const StripeCheckoutButton = ({ price, paymentSuccessful }) => {
   const priceForStripe = price * 100;
   const publishableKey = 'pk_test_DfRTshdow6rUJ1CwB1P9CADe';
 
@@ -17,6 +17,9 @@ const StripeCheckoutButton = ({ price }) => {
     })
       .then(() => {
         alert('Payment successful');
+        if (paymentSuccessful) {
+          paymentSuccessful();
+        }
       })
       .catch(error => {
         console.error('Payment error: ', JSON.parse(error));
