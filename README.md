@@ -6,4 +6,3 @@ The application is connected to Firebase for handling authentication and data pe
 [A demo is available here](https://jv-ecommerce-demo.herokuapp.com/).
 
 ![Screenshot](doc/screenshot.png)
-![Screenshot](doc/screenshot-shop.png)
